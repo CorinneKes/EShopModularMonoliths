@@ -1,2 +1,2 @@
 # EShopModularMonoliths
-Modular Monolith Architecture with .NET - Course by Memet Oskaya
+Modular Monolith Architecture with .NET - Course by Mehmet Ozkaya
