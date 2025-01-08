@@ -1,8 +1,14 @@
+version: '3.4'
+
 services:
   eshopdb:
     image: postgres
 
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Bootstrapper/Api/Dockerfile
+
 volumes:
   postgres_eshopdb:
-
-
