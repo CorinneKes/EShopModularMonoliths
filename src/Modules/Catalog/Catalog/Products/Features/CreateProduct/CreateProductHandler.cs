@@ -8,7 +8,7 @@ namespace Catalog.Products.Features.CreateProduct
     
     public record CreateProductResult(Guid Id);
 
-    internal class CreateProductCommandHandler(CatalogDbContext dbContext)
+    internal class CreateProductHandler(CatalogDbContext dbContext)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
 
