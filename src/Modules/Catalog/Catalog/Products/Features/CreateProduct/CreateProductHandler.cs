@@ -1,6 +1,4 @@
-﻿
-
-namespace Catalog.Products.Features.CreateProduct
+﻿namespace Catalog.Products.Features.CreateProduct
 {
 
     public record CreateProductCommand(ProductDto Product)
@@ -8,7 +6,19 @@ namespace Catalog.Products.Features.CreateProduct
     
     public record CreateProductResult(Guid Id);
 
-    internal class CreateProductHandler(CatalogDbContext dbContext)
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    { 
+        public CreateProductCommandValidator() 
+        {
+            RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(x => x.Product.Category).NotEmpty().WithMessage("Category is required.");
+            RuleFor(x => x.Product.ImageFile).NotEmpty().WithMessage("Image file is required.");
+            RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+        }
+    }
+
+    internal class CreateProductHandler(CatalogDbContext dbContext, 
+        IValidator<CreateProductCommand> validator, ILogger<CreateProductHandler> logger)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
 
@@ -18,6 +28,18 @@ namespace Catalog.Products.Features.CreateProduct
             // save to database
             // return result
 
+            // validation
+            var result = await validator.ValidateAsync(command, cancellationToken);
+            var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
+            if (errors.Any())
+            {
+                throw new ValidationException(errors.FirstOrDefault());
+            }
+
+            // logging
+            logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}.", command);
+            
+            // actual logic
             var product = CreateNewProduct(command.Product);
 
             dbContext.Products.Add(product);

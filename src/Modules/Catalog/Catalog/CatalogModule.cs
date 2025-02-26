@@ -18,6 +18,7 @@ namespace Catalog
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
             });
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             // Data - Infrastructure services
             var connectionString = configuration.GetConnectionString("Database");

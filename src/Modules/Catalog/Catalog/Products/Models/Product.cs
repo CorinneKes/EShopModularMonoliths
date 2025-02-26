@@ -38,7 +38,6 @@
             Category = category;
             Description = description;
             ImageFile = imageFile;
-            Price = price;
 
             // If the price has changed, raise a ProductPriceChanged domain event
             if (Price != price)

@@ -18,7 +18,7 @@ var app = builder.Build();
 app.MapCarter();
 
 // Invoke extension methods for configuring the HTTP request pipeline for each module
-app 
+app
     .UseCatalogModule()
     .UseBasketModule()
     .UseOrderingModule();
