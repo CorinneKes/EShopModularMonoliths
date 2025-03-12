@@ -19,6 +19,7 @@ namespace Catalog
             {
                 config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

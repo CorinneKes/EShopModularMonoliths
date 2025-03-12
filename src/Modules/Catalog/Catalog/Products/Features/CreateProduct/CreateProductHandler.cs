@@ -17,8 +17,7 @@
         }
     }
 
-    internal class CreateProductHandler(CatalogDbContext dbContext, 
-        ILogger<CreateProductHandler> logger)
+    internal class CreateProductHandler(CatalogDbContext dbContext)
         : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
 
@@ -27,12 +26,7 @@
             // create product entity from command object
             // save to database
             // return result
-
-
-            // logging
-            logger.LogInformation("CreateProductCommandHandler.Handle called with {@Command}.", command);
-            
-            // actual logic
+          
             var product = CreateNewProduct(command.Product);
 
             dbContext.Products.Add(product);
