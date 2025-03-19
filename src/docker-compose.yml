@@ -4,6 +4,9 @@ services:
   eshopdb:
     image: postgres
 
+  seq:
+    image: datalust/seq:latest
+
   api:
     image: ${DOCKER_REGISTRY-}api
     build:

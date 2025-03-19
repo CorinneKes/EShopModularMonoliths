@@ -1,6 +1,9 @@
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog((context, config) => 
+config.ReadFrom.Configuration(context.Configuration));
+
 // Add services to the dependency injection container
 
 builder.Services.AddCarterWithassemblies(typeof(CatalogModule).Assembly);
@@ -19,15 +22,14 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline
 app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(options => { });
 
 // Invoke extension methods for configuring the HTTP request pipeline for each module
 app
     .UseCatalogModule()
     .UseBasketModule()
     .UseOrderingModule();
-
-app
-    .UseExceptionHandler(options => { }); 
 
 
 app.Run();
