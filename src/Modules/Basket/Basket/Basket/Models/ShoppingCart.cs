@@ -30,7 +30,7 @@ public class ShoppingCart : Aggregate<Guid>
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(quantity);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
-        var existingItem = Items.FirstOrDefault(x => x.ProductID == productId);
+        var existingItem = Items.FirstOrDefault(x => x.ProductId == productId);
 
         if (existingItem != null)
         {
@@ -45,7 +45,7 @@ public class ShoppingCart : Aggregate<Guid>
 
     public void RemoveItem(Guid productId)
     {
-        var existingItem = Items.FirstOrDefault(x => x.ProductID == productId);
+        var existingItem = Items.FirstOrDefault(x => x.ProductId == productId);
 
         if (existingItem != null)
         { 
