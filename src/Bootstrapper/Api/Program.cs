@@ -6,7 +6,22 @@ config.ReadFrom.Configuration(context.Configuration));
 
 // Add services to the dependency injection container
 
-builder.Services.AddCarterWithassemblies(typeof(CatalogModule).Assembly);
+// Common services: Carter, MediatR, FluentValidation
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
+
+builder.Services.AddCarterWithassemblies(catalogAssembly, basketAssembly);
+
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(catalogAssembly, basketAssembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+});
+builder.Services.AddValidatorsFromAssemblies([catalogAssembly, basketAssembly]);
+
+
+// Module-specific services
 
 builder.Services
     .AddCatalogModule(builder.Configuration)
