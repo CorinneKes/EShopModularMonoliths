@@ -14,23 +14,17 @@ public class RemoveItemFromBasketCommandValidator : AbstractValidator<RemoveItem
     }
 }
 
-internal class RemoveItemFromBasketHandler(BasketDbContext DbContext)
+internal class RemoveItemFromBasketHandler(IBasketRepository repository)
     : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
 {
     public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand command, CancellationToken cancellationToken)
     {
-        var shoppingCart = await DbContext.ShoppingCarts
-            .Include(x => x.Items)
-            .SingleOrDefaultAsync(x => x.UserName == command.UserName, cancellationToken);
 
-        if (shoppingCart == null)
-        {
-            throw new BasketNotFoundException(command.UserName);
-        }
+        var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
         shoppingCart.RemoveItem(command.ProductId);
 
-        await DbContext.SaveChangesAsync(cancellationToken);
+        await repository.SaveChangesAsync(cancellationToken);
 
         return new RemoveItemFromBasketResult(shoppingCart.Id);
     }
