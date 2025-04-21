@@ -43,11 +43,17 @@ namespace Basket.Data.Repository
 
         }
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        public async Task<int> SaveChangesAsync(string? userName = null, CancellationToken cancellationToken = default)
         {
-            return await repository.SaveChangesAsync(cancellationToken);
+            var result = await repository.SaveChangesAsync(userName, cancellationToken);
 
-            // TODO: Clear cache
+            // Clear cache
+            if (userName is not null)
+            {
+                await cache.RemoveAsync(userName, cancellationToken);
+            }
+
+            return result;
         }
     }
 }

@@ -8,5 +8,5 @@ public interface IBasketRepository
 
     Task<bool>  DeleteBasket(string userName, CancellationToken cancellationToken = default);
 
-    Task<int>   SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<int>   SaveChangesAsync(string? userName = null, CancellationToken cancellationToken = default);
 }
