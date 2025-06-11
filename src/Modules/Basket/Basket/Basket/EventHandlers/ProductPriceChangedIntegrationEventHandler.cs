@@ -5,7 +5,7 @@ using Shared.Messaging.Events;
 
 namespace Basket.Basket.EventHandlers;
 
-public class ProductPriceChangedEventHandler(ISender sender, ILogger<ProductPriceChangedEventHandler> logger) : IConsumer<ProductPriceChangedIntegrationEvent>
+public class ProductPriceChangedIntegrationEventHandler(ISender sender, ILogger<ProductPriceChangedIntegrationEventHandler> logger) : IConsumer<ProductPriceChangedIntegrationEvent>
 {
     public async Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
     {
