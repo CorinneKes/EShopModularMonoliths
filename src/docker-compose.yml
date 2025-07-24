@@ -13,6 +13,9 @@ services:
   messagebus:
     image: rabbitmq:management
 
+  identity:
+    image: quay.io/keycloak/keycloak:latest
+
   api:
     image: ${DOCKER_REGISTRY-}api
     build:
