@@ -1,4 +1,6 @@
 
+using Keycloak.AuthServices.Authentication;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, config) => 
@@ -21,6 +23,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssembly, basketAssembly);
 
+builder.Services.AddKeycloakWebApiAuthentication(builder.Configuration);
+builder.Services.AddAuthorization();
+
 // Module-specific services
 
 builder.Services
@@ -36,9 +41,12 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
+
 app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(options => { });
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Invoke extension methods for configuring the HTTP request pipeline for each module
 app

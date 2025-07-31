@@ -46,6 +46,9 @@ services:
     - KC_DB_URL=jdbc:postgresql://eshopdb/EShopDb?currentSchema=identity
     - KC_DB_USERNAME=postgres
     - KC_DB_PASSWORD=postgres
+ 
+    depends_on:
+    - eshopdb
     restart: always
     ports:
     - "9090:8080"
