@@ -11,10 +11,11 @@ config.ReadFrom.Configuration(context.Configuration));
 // Common services: Carter, MediatR, FluentValidation
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
+var orderingAssembly = typeof(OrderingModule).Assembly;
 
-builder.Services.AddCarterWithassemblies(catalogAssembly, basketAssembly);
+builder.Services.AddCarterWithassemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
-builder.Services.AddMediatRWithAssemblies(catalogAssembly, basketAssembly);
+builder.Services.AddMediatRWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
