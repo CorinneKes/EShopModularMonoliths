@@ -1,4 +1,5 @@
 ﻿
+using Basket.Data.Processors;
 using Basket.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -35,6 +36,7 @@ namespace Basket
                 options.UseNpgsql(connectionString);
             });
 
+            services.AddHostedService<OutboxProcessor>();
 
             return services; 
         }
